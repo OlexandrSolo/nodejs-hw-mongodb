@@ -2,7 +2,11 @@ import express from "express";
 import cors from "cors";
 import pino from "pino-http";
 
-export const startServer = () => {
+
+import { env } from "./utils/env.js";
+import ContactCollection from "./db/models/contacts.js";
+
+export const setupServer = () => {
     const app = express();
     app.use(cors());
     const logger = pino({
@@ -12,9 +16,13 @@ export const startServer = () => {
     })
     // app.use(logger)
 
-    app.get('/', (req, res) => {
+    app.get('/contacts', async (req, res) => {
+        const data = await ContactCollection.find();
+
         res.json({
-            message: "Start Project"
+            status: 200,
+            message: "Successfully find movies",
+            data
         })
     })
 
@@ -32,5 +40,6 @@ export const startServer = () => {
         })
     })
 
-    app.listen(3000, () => console.log("Server running on 3000 port"))
+    const PORT = Number(env("PORT", 3000))
+    app.listen(PORT, () => console.log(`Server running on ${PORT} PORT`))
 }
