@@ -25,3 +25,24 @@ export const getContactByIdController = async (req, res) => {
         data: contact,
     })
 }
+
+export const addContactController = async (req, res) => {
+    const data = await contactServices.addContact(req.body);
+
+    res.status(201).json({
+        status: 201,
+        message: "Contact successful add",
+        data
+    })
+}
+
+export const upsertContactController = async (req, res) => {
+    const { id: _id } = req.params;
+    const data = await contactServices.updateContact({ _id, contact: req.body });
+
+    res.json({
+        status: 200,
+        message: "Contact update successfully",
+        data,
+    })
+}
