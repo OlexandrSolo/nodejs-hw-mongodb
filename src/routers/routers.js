@@ -7,7 +7,7 @@ const contactsRouter = Router();
 
 contactsRouter.get('/', ctrlWrapper(contactControllers.getContactsController))
 
-contactsRouter.get('/:contactId', ctrlWrapper(contactControllers.getContactByIdController))
+contactsRouter.get('/:id', ctrlWrapper(contactControllers.getContactByIdController))
 
 contactsRouter.post('/', ctrlWrapper(contactControllers.addContactController));
 

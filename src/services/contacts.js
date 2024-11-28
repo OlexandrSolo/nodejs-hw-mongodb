@@ -7,10 +7,17 @@ export const getContactById = async (contactId) => await ContactsCollection.find
 export const addContact = async (contact) => await ContactsCollection.create(contact);
 
 export const updateContact = async ({ _id, payload, options = {} }) => {
-    const data = ContactsCollection.findOneAndUpdate({ _id }, payload, {
+    const rawResult = await ContactsCollection.findOneAndUpdate({ _id }, payload, {
         ...options,
-        new: true
+        new: true,
+        includeResultMetadata: true
     });
+    // console.log(rawResult);
 
-    return data
+    if (!rawResult || !rawResult.value) return null
+
+    return {
+        data: rawResult.value,
+        isNew: Boolean(rawResult.lastErrorObject.upserted)
+    }
 }
