@@ -45,8 +45,6 @@ export const upsertContactController = async (req, res) => {
         }
     });
 
-    console.log(result);
-
     const status = result.isNew ? 200 : 201
 
     res.status(status).json({
@@ -54,4 +52,33 @@ export const upsertContactController = async (req, res) => {
         message: "Contact upserted successfully",
         data: result
     })
+}
+
+export const patchContactController = async (req, res) => {
+    const { id: _id } = req.params;
+
+    const result = await contactServices.updateContact({ _id, payload: req.body });
+
+    if (!result) {
+        throw createHttpError(404, `Contact with id-${_id} not found`)
+    }
+
+    res.json({
+        status: 200,
+        message: "Contact patched successfully",
+        data: result.data
+    })
+};
+
+export const deleteContactController = async (req, res) => {
+    const { id: _id } = req.params;
+
+    const data = await contactServices.deleteContact({ _id })
+
+    if (!data) {
+        throw createHttpError(404, `Contact with id-${_id} not found`)
+    }
+
+    res.status(204).send()
+
 }

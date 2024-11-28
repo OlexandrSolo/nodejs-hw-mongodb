@@ -12,7 +12,6 @@ export const updateContact = async ({ _id, payload, options = {} }) => {
         new: true,
         includeResultMetadata: true
     });
-    // console.log(rawResult);
 
     if (!rawResult || !rawResult.value) return null
 
@@ -20,4 +19,6 @@ export const updateContact = async ({ _id, payload, options = {} }) => {
         data: rawResult.value,
         isNew: Boolean(rawResult.lastErrorObject.upserted)
     }
-}
+};
+
+export const deleteContact = async filter => ContactsCollection.findOneAndDelete(filter);
