@@ -6,10 +6,11 @@ export const getContactById = async (contactId) => await ContactsCollection.find
 
 export const addContact = async (contact) => await ContactsCollection.create(contact);
 
-export const updateContact = async ({ _id, contact, options = {} }) => {
-    const data = await ContactsCollection.findOneAndUpdate({ _id }, contact, {
+export const updateContact = async ({ _id, payload, options = {} }) => {
+    const data = ContactsCollection.findOneAndUpdate({ _id }, payload, {
         ...options,
         new: true
     });
-    return data;
+
+    return data
 }
