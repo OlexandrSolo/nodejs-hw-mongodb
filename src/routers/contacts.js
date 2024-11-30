@@ -3,7 +3,7 @@ import { Router } from "express";
 import * as contactControllers from "../controllers/contacts.js";
 import ctrlWrapper from "../utils/ctrlWrapper.js";
 import validateBody from "../utils/validateBody.js";
-import { contactAddSchema } from "../validation/contacts.js";
+import { contactAddSchema, contactUpdateSchema } from "../validation/contacts.js";
 
 const contactsRouter = Router();
 
@@ -13,9 +13,9 @@ contactsRouter.get('/:id', validateBody(contactAddSchema), ctrlWrapper(contactCo
 
 contactsRouter.post('/', ctrlWrapper(contactControllers.addContactController));
 
-contactsRouter.put('/:id', ctrlWrapper(contactControllers.upsertContactController));
+contactsRouter.put('/:id', validateBody(contactAddSchema), ctrlWrapper(contactControllers.upsertContactController));
 
-contactsRouter.patch('/:id', ctrlWrapper(contactControllers.patchContactController));
+contactsRouter.patch('/:id', validateBody(contactUpdateSchema), ctrlWrapper(contactControllers.patchContactController));
 
 contactsRouter.delete("/:id", ctrlWrapper(contactControllers.deleteContactController))
 
