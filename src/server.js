@@ -15,9 +15,10 @@ export const setupServer = () => {
     app.use(cors());
     // app.use(logger)
 
-    app.use('/contacts', contactsRouter)
+    app.use('/contacts', contactsRouter);
 
-    app.use('/contacts/:contactId', contactsRouter)
+    app.use('/contacts/:contactId', contactsRouter);
+
 
     // middleware - не знайденої сторінки
     app.use(notFoundHandler)
