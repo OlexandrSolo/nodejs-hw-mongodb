@@ -28,13 +28,15 @@ export const getContactByIdController = async (req, res) => {
 }
 
 export const addContactController = async (req, res) => {
-    const data = await contactServices.addContact(req.body);
-
-    res.status(201).json({
-        status: 201,
-        message: "Successfully created a contact!",
-        data
-    })
+    if (req.body.name && req.body.phoneNumber && body.contactType) {
+        const data = await contactServices.addContact(req.body);
+        res.status(201).json({
+            status: 201,
+            message: "Successfully created a contact!",
+            data
+        })
+    }
+    throw createHttpError(500, "Incorrect body of request")
 }
 
 export const upsertContactController = async (req, res) => {
