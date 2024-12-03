@@ -9,9 +9,9 @@ const contactsRouter = Router();
 
 contactsRouter.get('/', ctrlWrapper(contactControllers.getContactsController))
 
-contactsRouter.get('/:id', validateBody(contactAddSchema), ctrlWrapper(contactControllers.getContactByIdController))
+contactsRouter.get('/:id', ctrlWrapper(contactControllers.getContactByIdController))
 
-contactsRouter.post('/', ctrlWrapper(contactControllers.addContactController));
+contactsRouter.post('/', validateBody(contactAddSchema), ctrlWrapper(contactControllers.addContactController));
 
 contactsRouter.put('/:id', validateBody(contactAddSchema), ctrlWrapper(contactControllers.upsertContactController));
 
