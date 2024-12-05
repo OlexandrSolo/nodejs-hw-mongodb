@@ -13,7 +13,9 @@ export const getAllContacts = async ({ page = 1, perPage = 10, sortBy = "_id", s
     }
 
     const data = await query;
-    const totalItems = await ContactsCollection.find().merge(query).countDocuments();
+    // const totalItems = await ContactsCollection.find().merge(query).countDocuments();
+    const totalItems = await ContactsCollection.find().countDocuments()
+    console.log(totalItems);
     const paginationData = calculatePaginationData({ totalItems, page, perPage })
 
     return {

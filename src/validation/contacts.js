@@ -7,7 +7,7 @@ export const contactAddSchema = Joi.object({
         "string.min": "у поля name мінімальна довжина 3 символи",
         "string.max": "у поля name максимальна довжина 20 символів"
     }),
-    phoneNumber: Joi.number().required().messages({
+    phoneNumber: Joi.string().required().messages({
         "any.required": "phoneNumber - поле не має бути пустим"
     }),
     email: Joi.string().min(3).max(20),
@@ -22,7 +22,7 @@ export const contactUpdateSchema = Joi.object({
         "string.min": "у поля name мінімальна довжина 3 символи",
         "string.max": "у поля name максимальна довжина 20 символів"
     }),
-    phoneNumber: Joi.number(),
+    phoneNumber: Joi.string(),
     email: Joi.string().min(3).max(20),
     isFavourite: Joi.boolean(),
     contactType: Joi.string().min(3).max(20).valid(...typeList)
