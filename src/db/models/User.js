@@ -18,12 +18,12 @@ export const userSchema = Schema({
         type: String,
         require: true,
     }
-})
+}, { versionKey: false, timestamps: true })
 
 userSchema.post("save", handleSaveError);
 userSchema.pre("findOneAndUpdate", setUpdateSetting);
 userSchema.post("findOneAndUpdate", handleSaveError);
 
-const userCollection = model("user", userSchema);
+const UserCollection = model("user", userSchema);
 
-export default userCollection;
+export default UserCollection;
