@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 
 import { handleSaveError, setUpdateSetting } from "./hooks.js";
+
 import { emailRegex } from "../../constants/users.js";
 
 export const userSchema = Schema({
