@@ -1,4 +1,4 @@
-import ContactsCollection from "../db/models/contacts.js"
+import ContactsCollection from "../db/models/Contacts.js"
 import { calculatePaginationData } from "../utils/calculatePaginationData.js";
 
 export const getAllContacts = async ({ page = 1, perPage = 10, sortBy = "_id", sortOrder = "asc", filter = {} }) => {

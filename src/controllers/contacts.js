@@ -2,7 +2,7 @@ import createHttpError from "http-errors";
 import * as contactServices from "../services/contacts.js";
 import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 import { parseSortParams } from "../utils/parseSortParams.js";
-import { sortByList } from "../db/models/contacts.js";
+import { sortByList } from "../db/models/Contacts.js";
 import { parseContactFilterParams } from "../utils/parseFilterParams.js";
 
 export const getContactsController = async (req, res) => {
@@ -35,8 +35,10 @@ export const getContactByIdController = async (req, res) => {
 }
 
 export const addContactController = async (req, res) => {
+    const { _id: userId } = req.user;
+    console.log(userId);
     if (req.body.name && req.body.phoneNumber && req.body.contactType) {
-        const data = await contactServices.addContact(req.body);
+        const data = await contactServices.addContact({ ...req.body, userId });
         res.status(201).json({
             status: 201,
             message: "Successfully created a contact!",
