@@ -2,10 +2,8 @@ import createHttpError from "http-errors";
 import * as contactServices from "../services/contacts.js";
 import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 import { parseSortParams } from "../utils/parseSortParams.js";
-// import { sortByList } from "../db/models/Contacts.js";
+import { sortByList } from "../db/models/Contacts.js";
 import { parseContactFilterParams } from "../utils/parseFilterParams.js";
-
-const sortByList = ["name", "phoneNumber", "email", "isFavourite", "contactType"];
 
 export const getContactsController = async (req, res) => {
     const { page, perPage } = parsePaginationParams(req.query);
@@ -49,6 +47,7 @@ export const addContactController = async (req, res) => {
         message: "Successfully created a contact!",
         data
     })
+
 }
 
 export const upsertContactController = async (req, res) => {

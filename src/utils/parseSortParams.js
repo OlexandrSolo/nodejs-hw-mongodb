@@ -1,7 +1,6 @@
 // import { sortByList } from "../db/models/Contacts.js";
 
 const sortOrderList = ["asc", "desc"];
-export const sortByList = ["name", "phoneNumber", "email", "isFavourite", "contactType"];
 
 export const parseSortParams = ({ sortBy, sortOrder }) => {
     const parsedSortOrder = sortOrderList.includes(sortOrder) ? sortOrder : sortOrderList[0];
