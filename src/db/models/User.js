@@ -18,7 +18,7 @@ export const userSchema = Schema({
     password: {
         type: String,
         require: true,
-    }
+    },
 }, { versionKey: false, timestamps: true })
 
 userSchema.post("save", handleSaveError);
