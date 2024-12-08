@@ -12,6 +12,10 @@ export const getAllContacts = async ({ page = 1, perPage = 10, sortBy = "_id", s
         query.where("isFavourite").equals(filter.isFavourite)
     }
 
+    if (filter.userId) {
+        query.where("userId").equals(filter.userId)
+    }
+
     const data = await query;
     const totalItems = await ContactsCollection.find().merge(query).countDocuments();
     const paginationData = calculatePaginationData({ totalItems, page, perPage })

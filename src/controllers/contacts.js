@@ -9,6 +9,8 @@ export const getContactsController = async (req, res) => {
     const { page, perPage } = parsePaginationParams(req.query);
     const { sortBy, sortOrder } = parseSortParams(req.query, sortByList);
     const filter = parseContactFilterParams(req.query);
+    const { _id: userId } = req.user;
+    filter.userId = userId
 
     const contacts = await contactServices.getAllContacts({ page, perPage, sortBy, sortOrder, filter });
 
@@ -36,16 +38,15 @@ export const getContactByIdController = async (req, res) => {
 
 export const addContactController = async (req, res) => {
     const { _id: userId } = req.user;
-    console.log(userId);
-    if (req.body.name && req.body.phoneNumber && req.body.contactType) {
-        const data = await contactServices.addContact({ ...req.body, userId });
-        res.status(201).json({
-            status: 201,
-            message: "Successfully created a contact!",
-            data
-        })
-    }
-    throw createHttpError(500, "Incorrect body of request")
+    const body = req.body;
+
+    const data = await contactServices.addContact({ ...req.body, userId });
+
+    res.status(201).json({
+        status: 201,
+        message: "Successfully created a contact!",
+        data
+    })
 }
 
 export const upsertContactController = async (req, res) => {

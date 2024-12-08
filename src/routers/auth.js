@@ -13,4 +13,8 @@ authRouter.post("/register", validateBody(authRegisterSchema), ctrlWrapper(authC
 
 authRouter.post("/login", validateBody(authLoginSchema), ctrlWrapper(authController.loginController))
 
+authRouter.post("/refresh", ctrlWrapper(authController.refreshSessionController));
+
+authRouter.post("/logout", ctrlWrapper(authController.logoutController));
+
 export default authRouter;
