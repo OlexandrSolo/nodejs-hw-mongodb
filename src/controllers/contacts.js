@@ -1,5 +1,6 @@
 import createHttpError from "http-errors";
 import * as contactServices from "../services/contacts.js";
+import { contactsAddSchema } from "../validation/contacts.js";
 
 export const getContactsController = async (req, res) => {
     const contacts = await contactServices.getAllContacts();
@@ -27,15 +28,19 @@ export const getContactByIdController = async (req, res) => {
 }
 
 export const addContactController = async (req, res) => {
-    if (req.body.name && req.body.phoneNumber && req.body.contactType) {
-        const data = await contactServices.addContact(req.body);
-        res.status(201).json({
-            status: 201,
-            message: "Successfully created a contact!",
-            data
-        })
-    }
-    throw createHttpError(500, "Incorrect body of request")
+
+    const { error } = contactsAddSchema.validate(req.body);
+    if (error) throw createHttpError(400, error.message)
+
+    // if (req.body.name && req.body.phoneNumber && req.body.contactType) {
+    //     const data = await contactServices.addContact(req.body);
+    //     res.status(201).json({
+    //         status: 201,
+    //         message: "Successfully created a contact!",
+    //         data
+    //     })
+    // }
+    // throw createHttpError(500, "Incorrect body of request")
 }
 
 export const upsertContactController = async (req, res) => {
