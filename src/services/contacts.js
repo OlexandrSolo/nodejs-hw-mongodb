@@ -9,7 +9,6 @@ export const addContact = async (contact) => await ContactsCollection.create(con
 export const updateContact = async ({ _id, payload, options = {} }) => {
     const rawResult = await ContactsCollection.findOneAndUpdate({ _id }, payload, {
         ...options,
-        new: true,
         includeResultMetadata: true
     });
 
