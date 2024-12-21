@@ -15,4 +15,4 @@ export const contactsUpdateSchema = Joi.object({
     email: Joi.string(),
     isFavourite: Joi.boolean(),
     contactType: Joi.string().valid(...typeList)
-})
+});
