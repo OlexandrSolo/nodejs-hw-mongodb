@@ -8,3 +8,7 @@ export const registerController = async (req, res) => {
         message: "Successfully register user",
     })
 }
+
+export const loginController = async (req, res) => {
+
+}
