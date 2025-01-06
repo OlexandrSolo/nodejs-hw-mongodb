@@ -6,14 +6,22 @@ export const getAllContacts = async ({
     perPage = 10,
     sortBy = "name",
     sortOrder = "asc",
-    filter = {} }) => {
+    filter = {},
+    userId }) => {
     const limit = perPage;
     const skip = (page - 1) * limit;
-    const contactsQuery = ContactsCollection.find();
+    console.log(userId);
+    const contactsQuery = ContactsCollection.findById({ userId });
+
 
     if (filter.isFavourite) {
         contactsQuery.where("isFavourite").equals(filter.isFavourite);
     }
+
+    if (!filter.userId) {
+        contactsQuery.where("userId").equals(filter.userId)
+    }
+
     const items = await contactsQuery.skip(skip).limit(limit).sort({ [sortBy]: sortOrder });
     const totalItems = await ContactsCollection.find().merge(contactsQuery).countDocuments();
 
