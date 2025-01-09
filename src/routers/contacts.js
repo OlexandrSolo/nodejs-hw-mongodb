@@ -15,7 +15,7 @@ const contactsRouter = Router();
 
 contactsRouter.use(authenticate);
 
-contactsRouter.use(authorization)
+// contactsRouter.use(authorization)
 
 contactsRouter.get('/', ctrlWrapper(contactControllers.getContactsController))
 
