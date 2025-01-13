@@ -7,7 +7,9 @@ import ctrlWrapper from "../utils/ctrlWrapper.js";
 
 const authRouter = Router();
 
-authRouter.post("/register", validateBody(authRegisterSchema), ctrlWrapper(authController.registerController))
+authRouter.post("/register", validateBody(authRegisterSchema), ctrlWrapper(authController.registerController));
+
+authRouter.get('/verify', ctrlWrapper(authController.verifyController))
 
 authRouter.post("/login", validateBody(authLoginSchema), ctrlWrapper(authController.loginController));
 
