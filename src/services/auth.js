@@ -14,6 +14,7 @@ import jwt from "jsonwebtoken";
 
 import { refreshTokenLifeTime, accessTokenLifeTime } from "../constants/users.js";
 import { TEMPLATES_DIR } from "../constants/index.js";
+const { SMTP_FROM } = process.env;
 
 const emailTemplatePath = path.join(TEMPLATES_DIR, "reset-password-email.html");
 
@@ -46,10 +47,11 @@ export const register = async (payload) => {
     const token = jwt.sign({ email }, jwtSecret, { expiresIn: "1h" })
 
     const html = template({
-        link: `${appDomain}/auth/verify/token=${token}`
+        link: `${appDomain}/verify?token=${token}`
     })
 
     const verifyEmail = {
+        from: SMTP_FROM,
         to: email,
         subject: "Verify email",
         html,

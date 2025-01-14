@@ -9,13 +9,10 @@ import { contactsAddSchema, contactsUpdateSchema } from "../validation/contacts.
 
 import { isValidId } from "../middlewares/isValidId.js";
 import { authenticate } from "../middlewares/authenticate.js";
-import { authorization } from "../middlewares/authorization.js";
 
 const contactsRouter = Router();
 
 contactsRouter.use(authenticate);
-
-// contactsRouter.use(authorization)
 
 contactsRouter.get('/', ctrlWrapper(contactControllers.getContactsController))
 
