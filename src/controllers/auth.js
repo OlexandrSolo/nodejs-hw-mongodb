@@ -30,7 +30,7 @@ export const sendResetEmailController = async (req, res) => {
 
     res.json({
         status: 200,
-        message: "Reset password email was successfully sent",
+        message: "Reset password email has been successfully sent.",
         data: {}
     })
 }
@@ -40,7 +40,7 @@ export const resetPasswordController = async (req, res) => {
 
     res.json({
         status: 200,
-        message: "Reset password email has been successfully sent."
+        message: "Password has been successfully reset."
     })
 }
 
