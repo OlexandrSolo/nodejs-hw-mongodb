@@ -17,11 +17,14 @@ const userSchema = new Schema({
         type: String,
         require: true,
     },
+    // =============== VERIFY =============== 
+    /*
     verify: {
         type: Boolean,
         default: false,
         require: true
     }
+    */
 }, {
     versionKey: false,
     timestamps: true

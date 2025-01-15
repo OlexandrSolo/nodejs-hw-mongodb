@@ -13,14 +13,17 @@ import { env } from "../utils/env.js";
 import jwt from "jsonwebtoken";
 
 import { refreshTokenLifeTime, accessTokenLifeTime } from "../constants/users.js";
-import { TEMPLATES_DIR } from "../constants/index.js";
-const { SMTP_FROM } = process.env;
 
+const { SMTP_FROM } = process.env;
+import { TEMPLATES_DIR } from "../constants/index.js";
+const appDomain = env("APP_DOMAIN");
+
+/* // =============== VERIFY =============== 
 const emailTemplatePath = path.join(TEMPLATES_DIR, "reset-password-email.html");
 
 const emailTemplateSource = await readFile(emailTemplatePath, "utf-8");
+*/
 
-const appDomain = env("APP_DOMAIN");
 const jwtSecret = env("JWT_SECRET");
 
 const createSessionData = () => ({
@@ -42,39 +45,42 @@ export const register = async (payload) => {
 
     const newUser = UserCollection.create({ ...payload, password: hashPassword });
 
-    const template = Handlebars.compile(emailTemplateSource);
-
+    // =============== VERIFY =============== 
+    /* const template = Handlebars.compile(emailTemplateSource);
+    
     const token = jwt.sign({ email }, jwtSecret, { expiresIn: "1h" })
-
+    
     const html = template({
         link: `${appDomain}/verify?token=${token}`
     })
-
+    
     const verifyEmail = {
         from: SMTP_FROM,
         to: email,
         subject: "Verify email",
         html,
     }
-
+    
     await sendEmail(verifyEmail)
+    */
 
     return newUser;
 }
 
-export const verify = async token => {
-    try {
-        const { email } = jwt.verify(token, jwtSecret)
-        const user = await UserCollection.findOne({ email })
-        if (!user) {
-            throw createHttpError(401, "User not found")
-        }
-        await UserCollection.findOneAndUpdate({ _id: user._id }, { verify: true })
-    }
-    catch (error) {
-        throw createHttpError(401, error.message)
-    }
-}
+// =============== VERIFY =============== 
+// export const verify = async token => {
+//     try {
+//         const { email } = jwt.verify(token, jwtSecret)
+//         const user = await UserCollection.findOne({ email })
+//         if (!user) {
+//             throw createHttpError(401, "User not found")
+//         }
+//         await UserCollection.findOneAndUpdate({ _id: user._id }, { verify: true })
+//     }
+//     catch (error) {
+//         throw createHttpError(401, error.message)
+//     }
+// }
 
 export const login = async ({ email, password }) => {
     const user = await UserCollection.findOne({ email });
@@ -89,9 +95,11 @@ export const login = async ({ email, password }) => {
         throw createHttpError(401, "Email or Password invalid");
     }
 
-    if (!user.verify) {
+    // =============== VERIFY =============== 
+    /* if (!user.verify) {
         throw createHttpError(401, "Email not verified")
     }
+    */
 
     await SessionsCollection.deleteOne({ userId: user._id })
 
@@ -100,6 +108,61 @@ export const login = async ({ email, password }) => {
         userId: user._id,
         ...sessionData
     })
+}
+
+export const requestResetToken = async (email) => {
+    const user = await UserCollection.findOne({ email });
+    if (!user) {
+        throw createHttpError(404, "User not found")
+    }
+
+    const resetToken = jwt.sign({
+        sub: user._id,
+        email
+    },
+        jwtSecret,
+        {
+            expiresIn: "15m"
+        });
+
+    const resetPasswordTemplatePath = path.join(
+        TEMPLATES_DIR,
+        "reset-password-email.html"
+    )
+
+    const templateSource = (await readFile(resetPasswordTemplatePath)).toString()
+
+    const template = Handlebars.compile(templateSource)
+
+    const html = template({
+        name: user.name,
+        link: `${appDomain}/reset-password?token=${resetToken}`
+    })
+
+    await sendEmail({
+        from: SMTP_FROM,
+        to: email,
+        subject: 'Reset your password',
+        html
+    });
+}
+
+export const resetPassword = async payload => {
+    try {
+        const { email, sub } = jwt.verify(payload.token, jwtSecret)
+        const user = await UserCollection.findOne({ _id: sub, email })
+        if (!user) {
+            throw createHttpError(401, "User not found")
+        }
+        const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+        await UserCollection.findOneAndUpdate(
+            { _id: user._id },
+            { password: encryptedPassword },)
+    }
+    catch (error) {
+        throw createHttpError(401, error.message)
+    }
 }
 
 export const refreshToken = async (payload) => {
