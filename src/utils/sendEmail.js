@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 
 const { SMTP_PASSWORD, SMTP_USER, SMTP_FROM, SMTP_HOST } = process.env;
+
 const nodemailerConfig = {
     host: SMTP_HOST,
     port: 465,
