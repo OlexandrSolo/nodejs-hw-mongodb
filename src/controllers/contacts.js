@@ -4,6 +4,9 @@ import { parsePaginationParams } from "../utils/parsePaginationParams.js";
 import { parseSortParams } from "../utils/parseSortParams.js";
 import { sortByList } from "../db/models/contacts.js";
 import { parseContactFilterParams } from "../utils/filters/parseContactFilterParams.js";
+import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
+
+const { ENABLE_CLOUDINARY } = process.env;
 
 export const getContactsController = async (req, res) => {
     const { page, perPage } = parsePaginationParams(req.query);
@@ -68,7 +71,20 @@ export const patchContactController = async (req, res, next) => {
     const { id: _id } = req.params;
     const { _id: userId } = req.user;
 
-    const result = await contactServices.updateContact({ _id, userId }, req.body);
+    const photo = req.file;
+
+    let photoUrl;
+
+    if (photo) {
+        if (ENABLE_CLOUDINARY === "true") {
+            photoUrl = await saveFileToUploadDir(photo);
+        }
+        else {
+            photoUrl = await saveFileToUploadDir(photo);
+        }
+    }
+
+    const result = await contactServices.updateContact({ _id, userId }, { photo: photoUrl }, req.body,);
 
     if (result === null) {
         next(createHttpError(404, `Contact with id ${_id} not found`));
@@ -95,3 +111,34 @@ export const deleteContactController = async (req, res) => {
     res.status(204).send()
 
 }
+
+
+// export const patchStudentController = async (req, res, next) => {
+//     const { id: userId } = req.params;
+//     const photo = req.file;
+
+//     let photoUrl;
+
+//     if (photo) {
+//         if (ENABLE_CLOUDINARY === "true") {
+//             photoUrl = await saveFileToCloudinary(photo);
+//         }
+//     }
+
+//     const result = await updateStudent(userId, {
+//         ...req.body,
+//         photo: photoUrl,
+//     });
+
+//     if (!result) {
+//         next(createHttpError(404, 'Student not found'));
+//         return;
+//     }
+
+//     res.json({
+//         status: 200,
+//         message: `Successfully patched a student!`,
+//         data: result.contacts,
+//     });
+
+// }

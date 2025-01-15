@@ -136,7 +136,7 @@ export const requestResetToken = async (email) => {
 
     const html = template({
         name: user.name,
-        link: `${appDomain}/reset-password?token=${resetToken}`
+        link: `${appDomain}/auth/reset-password?token=${resetToken}`
     })
 
     await sendEmail({
