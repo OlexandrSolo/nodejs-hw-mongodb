@@ -12,7 +12,7 @@ authRouter.post("/register", validateBody(authRegisterSchema), ctrlWrapper(authC
 // authRouter.get('/verify', ctrlWrapper(authController.verifyController))
 
 authRouter.post("/send-reset-email", validateBody(requestResetEmailSchema), ctrlWrapper(authController.sendResetEmailController))
-authRouter.post('/reset-password', validateBody(resetPasswordSchema), ctrlWrapper(authController.resetPasswordController),
+authRouter.post('/reset-pwd', validateBody(resetPasswordSchema), ctrlWrapper(authController.resetPasswordController),
 );
 authRouter.post("/login", validateBody(authLoginSchema), ctrlWrapper(authController.loginController));
 

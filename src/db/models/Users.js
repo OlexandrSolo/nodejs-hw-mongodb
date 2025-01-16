@@ -17,9 +17,9 @@ const userSchema = new Schema({
         type: String,
         require: true,
     },
-    // photo: {
-    //     type: String,
-    // }
+    photo: {
+        type: String,
+    }
     // =============== VERIFY =============== 
     /*
     verify: {

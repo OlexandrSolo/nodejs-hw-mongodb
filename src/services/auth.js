@@ -13,9 +13,9 @@ import { env } from "../utils/env.js";
 import jwt from "jsonwebtoken";
 
 import { refreshTokenLifeTime, accessTokenLifeTime } from "../constants/users.js";
+import { TEMPLATES_DIR } from "../constants/index.js";
 
 const { SMTP_FROM } = process.env;
-import { TEMPLATES_DIR } from "../constants/index.js";
 const appDomain = env("APP_DOMAIN");
 
 /* // =============== VERIFY =============== 
@@ -136,7 +136,7 @@ export const requestResetToken = async (email) => {
 
     const html = template({
         name: user.name,
-        link: `${appDomain}/auth/reset-password?token=${resetToken}`
+        link: `${appDomain}/auth/reset-pwd?token=${resetToken}`
     })
 
     await sendEmail({
@@ -168,22 +168,6 @@ export const resetPassword = async payload => {
         { _id: user._id },
         { password: encryptedPassword },
     );
-
-    // try {
-    //     const { email, sub } = jwt.verify(payload.token, jwtSecret)
-    //     const user = await UserCollection.findOne({ _id: sub, email })
-    //     if (!user) {
-    //         throw createHttpError(401, "User not found")
-    //     }
-    //     const encryptedPassword = await bcrypt.hash(payload.password, 10);
-
-    //     await UserCollection.findOneAndUpdate(
-    //         { _id: user._id },
-    //         { password: encryptedPassword },)
-    // }
-    // catch (error) {
-    //     throw createHttpError(401, error.message)
-    // }
 }
 
 export const refreshToken = async (payload) => {
