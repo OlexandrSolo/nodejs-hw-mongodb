@@ -25,6 +25,9 @@ properties:
     description: "Contact's contact type"
     type: string
     enum: ['work', 'home', 'personal']
+  userId:
+    description: "Contact's parent id"
+    type: string
   photo:
     description: "Link to contact's photo"
     type: string
