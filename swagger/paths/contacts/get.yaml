@@ -36,7 +36,7 @@ parameters:
   - in: query
     name: sortOrder
     schema:
-      type: integer
+      type: string
       enum: ['asc', 'dsc']
       example: 'asc'
   - in: query
@@ -80,10 +80,29 @@ responses:
                   'hasNextPage',
                   'hasPreviousPage',
                 ]
-                properties:
-                  data:
-                    type: array
-                    items: 
-                      $ref: ../../../components/schemas/contact.yaml
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: ../../components/schemas/contact.yaml
+                page:
+                  type: number
+                  example: 2
+                perPage:
+                  type: number
+                  example: 20
+                totalItems:
+                  type: number
+                  example: 40
+                totalPages:
+                  type: number
+                  example: 4
+                hasNextPage:
+                  type: boolean
+                  example: true
+                hasPreviousPage:
+                  type: boolean
+                  example: false
+
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: ../../components/responses/401.yaml
