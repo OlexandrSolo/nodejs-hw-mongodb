@@ -77,7 +77,7 @@
             "in": "query",
             "name": "sortOrder",
             "schema": {
-              "type": "integer",
+              "type": "string",
               "enum": [
                 "asc",
                 "dsc"

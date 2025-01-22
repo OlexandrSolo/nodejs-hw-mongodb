@@ -10,7 +10,9 @@ import authRouter from "./routers/auth.js";
 
 import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { swaggerDocs } from "./middlewares/swaggerDocs.js";
 import { logger } from "./middlewares/logger.js";
+
 
 export const setupServer = () => {
     const app = express();
@@ -27,6 +29,8 @@ export const setupServer = () => {
     app.use('/contacts', contactsRouter);
 
     app.use('/contacts/:contactId', contactsRouter);
+
+    app.use('/api-docs', swaggerDocs())
 
 
     // middleware - не знайденої сторінки
