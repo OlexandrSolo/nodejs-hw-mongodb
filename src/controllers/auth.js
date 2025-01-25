@@ -45,7 +45,6 @@ export const resetPasswordController = async (req, res) => {
     })
 }
 
-/* // =============== VERIFY =============== 
 export const verifyController = async (req, res) => {
     const { token } = req.query;
     await authServices.verify(token);
@@ -55,7 +54,7 @@ export const verifyController = async (req, res) => {
         message: "Email verified"
     })
 }
-*/
+* /
 
 export const loginController = async (req, res) => {
     const session = await authServices.login(req.body)
