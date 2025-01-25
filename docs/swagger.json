@@ -65,7 +65,6 @@
                 "phoneNumber",
                 "email",
                 "isFavourite",
-                "contactType",
                 "createdAt",
                 "updatedAt"
               ],
@@ -91,19 +90,6 @@
             "schema": {
               "type": "boolean",
               "example": "true"
-            }
-          },
-          {
-            "in": "query",
-            "name": "contactType",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "work",
-                "home",
-                "personal"
-              ],
-              "example": "work"
             }
           }
         ],
@@ -484,7 +470,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Delete a contact by id!"
           },
           "401": {

@@ -27,7 +27,6 @@ parameters:
           'phoneNumber',
           'email',
           'isFavourite',
-          'contactType',
           'createdAt',
           'updatedAt',
         ]
@@ -44,12 +43,6 @@ parameters:
     schema:
       type: boolean
       example: 'true'
-  - in: query
-    name: contactType
-    schema:
-      type: string
-      enum: ['work', 'home', 'personal']
-      example: 'work'
 responses:
   '200':
     description: 'Successfully found contacts!'

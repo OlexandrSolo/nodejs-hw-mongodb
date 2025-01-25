@@ -1,7 +1,4 @@
 const parsedBoolean = (param) => {
-    // if (typeof value !== "string") return;
-
-    // return value === "true" || "false" ? value : false;
     const isString = typeof param === 'string';
 
     if (!isString) return;
