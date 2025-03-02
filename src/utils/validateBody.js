@@ -6,12 +6,12 @@ export const validateBody = schema => {
             await schema.validateAsync(req.body, {
                 abortEarly: false
             });
-            next()
+            next();
         }
         catch (error) {
             next(createHttpError(400, error.message));
         }
-    }
+    };
 
-    return func
-}
+    return func;
+};

@@ -1,4 +1,4 @@
-import ContactsCollection from "../db/models/contacts.js"
+import ContactsCollection from "../db/models/contacts.js";
 import { calcPaginationData } from "../utils/calcPaginationData.js";
 
 export const getAllContacts = async ({
@@ -49,12 +49,12 @@ export const updateContact = async (filter, payload, options = {}) => {
         includeResultMetadata: true
     });
 
-    if (!rawResult || !rawResult.value) return null
+    if (!rawResult || !rawResult.value) return null;
 
     return {
         data: rawResult.value,
         isNew: Boolean(rawResult.lastErrorObject.upserted)
-    }
+    };
 };
 
 export const deleteContact = async filter => ContactsCollection.findOneAndDelete(filter);

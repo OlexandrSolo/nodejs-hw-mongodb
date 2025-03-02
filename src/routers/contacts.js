@@ -15,9 +15,9 @@ const contactsRouter = Router();
 
 contactsRouter.use(authenticate);
 
-contactsRouter.get('/', upload.single('photo'), ctrlWrapper(contactControllers.getContactsController))
+contactsRouter.get('/', upload.single('photo'), ctrlWrapper(contactControllers.getContactsController));
 
-contactsRouter.get('/:id', isValidId, ctrlWrapper(contactControllers.getContactByIdController))
+contactsRouter.get('/:id', isValidId, ctrlWrapper(contactControllers.getContactByIdController));
 
 contactsRouter.post('/', upload.single('photo'), validateBody(contactsAddSchema), ctrlWrapper(contactControllers.addContactController));
 
@@ -25,6 +25,6 @@ contactsRouter.put('/:id', upload.single('photo'), isValidId, validateBody(conta
 
 contactsRouter.patch('/:id', upload.single('photo'), isValidId, validateBody(contactsUpdateSchema), ctrlWrapper(contactControllers.patchContactController));
 
-contactsRouter.delete("/:id", isValidId, ctrlWrapper(contactControllers.deleteContactController))
+contactsRouter.delete("/:id", isValidId, ctrlWrapper(contactControllers.deleteContactController));
 
 export default contactsRouter;

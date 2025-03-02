@@ -35,7 +35,7 @@ const userSchema = new Schema({
 
 userSchema.post("save", handleSaveError);
 
-userSchema.pre("findOneAndUpdate", handleSaveError)
+userSchema.pre("findOneAndUpdate", handleSaveError);
 
 userSchema.post("findOneAndUpdate", handleSaveError);
 
